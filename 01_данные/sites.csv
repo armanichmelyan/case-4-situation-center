@@ -1,0 +1,6 @@
+site_id,name,zone
+site_01,Птичник №1,zone_A
+site_02,Птичник №2,zone_A
+site_03,Птичник №3,zone_B
+site_04,Инкубатор,zone_B
+site_05,Кормоцех,zone_C

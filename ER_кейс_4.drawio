@@ -1,0 +1,92 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Страница-1" id="4rJVoi8xzF00TKhKIHxj">
+    <mxGraphModel dx="1050" dy="545" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="Z_tmSzen7NBXF_WEluUN-7" edge="1" parent="1" source="Z_tmSzen7NBXF_WEluUN-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;exitX=0.968;exitY=0.523;exitDx=0;exitDy=0;exitPerimeter=0;" target="Z_tmSzen7NBXF_WEluUN-2" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Z_tmSzen7NBXF_WEluUN-8" connectable="0" parent="Z_tmSzen7NBXF_WEluUN-7" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];inheritText=1;defaultLabelBackgroundColor=page;" value="1:N" vertex="1">
+          <mxGeometry relative="1" x="-0.0483" y="-5" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Z_tmSzen7NBXF_WEluUN-11" edge="1" parent="1" source="Z_tmSzen7NBXF_WEluUN-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;" target="Z_tmSzen7NBXF_WEluUN-4" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Z_tmSzen7NBXF_WEluUN-12" connectable="0" parent="Z_tmSzen7NBXF_WEluUN-11" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];inheritText=1;defaultLabelBackgroundColor=page;" value="1:N" vertex="1">
+          <mxGeometry relative="1" x="-0.24" y="3" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Z_tmSzen7NBXF_WEluUN-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=center;" value="&lt;div align=&quot;center&quot;&gt;&lt;b&gt;Site&lt;/b&gt;&lt;br&gt;────────────&lt;br&gt;PK site_id&lt;br&gt;name&lt;br&gt;zone&lt;/div&gt;&lt;div align=&quot;center&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;div align=&quot;center&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;div align=&quot;center&quot;&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="160" width="180" x="230" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="Z_tmSzen7NBXF_WEluUN-9" edge="1" parent="1" source="Z_tmSzen7NBXF_WEluUN-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;" target="Z_tmSzen7NBXF_WEluUN-3" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Z_tmSzen7NBXF_WEluUN-10" connectable="0" parent="Z_tmSzen7NBXF_WEluUN-9" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];inheritText=1;defaultLabelBackgroundColor=page;" value="1:N" vertex="1">
+          <mxGeometry relative="1" x="0.0118" y="-2" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Z_tmSzen7NBXF_WEluUN-2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;b&gt;Sensor&lt;/b&gt;&lt;br&gt;────────────&lt;br&gt;PK sensor_id&lt;br&gt;FK site_id&lt;br&gt;indicator&lt;br&gt;&lt;div&gt;status&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="170" width="180" x="470" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="Z_tmSzen7NBXF_WEluUN-14" edge="1" parent="1" source="Z_tmSzen7NBXF_WEluUN-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;" target="Z_tmSzen7NBXF_WEluUN-5">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="800" y="310" />
+              <mxPoint x="570" y="310" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Z_tmSzen7NBXF_WEluUN-15" connectable="0" parent="Z_tmSzen7NBXF_WEluUN-14" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];inheritText=1;defaultLabelBackgroundColor=page;" value="1:N" vertex="1">
+          <mxGeometry relative="1" x="0.1942" y="-2" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Z_tmSzen7NBXF_WEluUN-3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;b&gt;Measurement&lt;/b&gt;&lt;br&gt;────────────&lt;br&gt;PK measurement_id&lt;br&gt;FK sensor_id&lt;br&gt;time&lt;br&gt;value&lt;br&gt;norm_min&lt;br&gt;norm_max&lt;br&gt;status" vertex="1">
+          <mxGeometry height="170" width="180" x="710" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="Z_tmSzen7NBXF_WEluUN-18" edge="1" parent="1" source="Z_tmSzen7NBXF_WEluUN-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;" target="Z_tmSzen7NBXF_WEluUN-6">
+          <mxGeometry relative="1" x="-0.0069" as="geometry">
+            <Array as="points">
+              <mxPoint x="320" y="550" />
+              <mxPoint x="800" y="550" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Z_tmSzen7NBXF_WEluUN-19" connectable="0" parent="Z_tmSzen7NBXF_WEluUN-18" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];inheritText=1;defaultLabelBackgroundColor=page;" value="1:N" vertex="1">
+          <mxGeometry relative="1" x="0.0398" y="-2" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Z_tmSzen7NBXF_WEluUN-4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;b&gt;Incident&lt;/b&gt;&lt;br&gt;────────────&lt;br&gt;PK incident_id&lt;br&gt;type&lt;br&gt;FK location&lt;br&gt;time&lt;br&gt;responsible&lt;br&gt;status&lt;br&gt;deadline&lt;br&gt;source" vertex="1">
+          <mxGeometry height="170" width="180" x="230" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="Z_tmSzen7NBXF_WEluUN-16" edge="1" parent="1" source="Z_tmSzen7NBXF_WEluUN-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;" target="Z_tmSzen7NBXF_WEluUN-6" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Z_tmSzen7NBXF_WEluUN-17" connectable="0" parent="Z_tmSzen7NBXF_WEluUN-16" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];inheritText=1;defaultLabelBackgroundColor=page;" value="1:N" vertex="1">
+          <mxGeometry relative="1" x="-0.0364" y="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Z_tmSzen7NBXF_WEluUN-5" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;b&gt;Alert&lt;/b&gt;&lt;br&gt;────────────&lt;br&gt;PK alert_id&lt;br&gt;FK measurement_id&lt;br&gt;severity&lt;br&gt;action&lt;br&gt;&lt;div&gt;at&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="170" width="180" x="470" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="Z_tmSzen7NBXF_WEluUN-6" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;b&gt;AuditEvent&lt;/b&gt;&lt;br&gt;────────────&lt;br&gt;PK event_id&lt;br&gt;entity_type&lt;br&gt;entity_id&lt;br&gt;action&lt;br&gt;actor&lt;br&gt;&lt;div&gt;at&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="170" width="180" x="710" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="Z_tmSzen7NBXF_WEluUN-20" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Каждая запись AuditEvent относится либо к Incident, либо к Alert.&lt;br&gt;Тип объекта определяется полем entity_type,&lt;br&gt;а его идентификатор хранится в entity_id." vertex="1">
+          <mxGeometry height="70" width="410" x="355" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="Z_tmSzen7NBXF_WEluUN-21" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;ER-модель ситуационного центра&lt;/font&gt;" vertex="1">
+          <mxGeometry height="30" width="225" x="447.5" y="80" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,127 @@
+# Схемы событий ситуационного центра — кейс 4
+# Не REST API, а JSON-схемы входа (от датчиков и приложения)
+# Проверить на https://www.jsonschemavalidator.net/
+
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: SituationCenterEvents
+description: Набор схем событий для ситуационного центра
+
+definitions:
+
+  # ОБРАЗЕЦ — не трогать
+  TelemetryEvent:
+    type: object
+    required: [event_id, time, location, indicator, value]
+    additionalProperties: false
+    properties:
+      event_id:
+        type: string
+        pattern: '^evt_[A-Za-z0-9]{6,32}$'
+      time:
+        type: string
+        format: date-time
+      location:
+        type: string
+        pattern: '^site_[0-9]{2}$'
+      indicator:
+        enum: [temperature, humidity, ventilation]
+      value:
+        type: number
+      signature:
+        type: string
+        description: HMAC-SHA256 подпись события (защита от подмены)
+
+  # TODO — заполните
+  IncidentEvent:
+    type: object
+    required: [incident_id, type, location, time, status]
+    properties:
+      incident_id:
+        ?   # подсказка: строка, pattern ^inc_[0-9]{3}$
+      type:
+        ?   # подсказка: enum temperature / ventilation / humidity / equipment / other
+      location:
+        ?   # подсказка: строка, pattern ^site_[0-9]{2}$
+      time:
+        ?   # подсказка: string, format date-time
+      responsible:
+        ?   # подсказка: строка, nullable
+      status:
+        ?   # подсказка: enum NEW / ASSIGNED / IN_PROGRESS / CLOSED
+      source:
+        ?   # подсказка: enum mobile / sensor / auto
+
+  # TODO — заполните
+  AlertEvent:
+    type: object
+    required: [alert_id, severity, at]
+    properties:
+      alert_id:
+        ?   # подсказка: строка, pattern ^alrt_[0-9]{4}$
+      measurement_id:
+        ?   # подсказка: FK на Measurement
+      severity:
+        ?   # подсказка: enum WARNING / CRITICAL / STALE
+      action:
+        ?   # подсказка: enum ALERT_CREATED / ESCALATED / DUPLICATE
+      at:
+        ?   # подсказка: string, format date-time
+
+  # TODO — заполните
+  TransitionRequest:
+    type: object
+    required: [incident_id, to, actor]
+    properties:
+      incident_id:
+        ?   # подсказка: строка
+      to:
+        ?   # подсказка: enum ASSIGNED / IN_PROGRESS / CLOSED
+      actor:
+        ?   # подсказка: строка (роль или user_id)
+      comment:
+        ?   # подсказка: строка, nullable
+
+  # TODO — заполните
+  Error:
+    type: object
+    required: [error_code, message]
+    properties:
+      error_code:
+        ?   # подсказка: enum VALIDATION_ERROR / UNKNOWN_LOCATION / INVALID_TRANSITION / DUPLICATE_EVENT / SENSOR_SIGNATURE_INVALID
+      message:
+        ?   # подсказка: строка
+      retryable:
+        ?   # подсказка: boolean
+      details:
+        ?   # подсказка: object
+
+examples:
+
+  valid_telemetry:
+    event_id: evt_ab12cd
+    time: "2025-11-01T08:00:00Z"
+    location: site_01
+    indicator: temperature
+    value: 28.3
+    signature: "hmac:..."
+
+  valid_incident:
+    incident_id: inc_001
+    type: temperature
+    location: site_01
+    time: "2025-11-01T08:00:00Z"
+    responsible: null
+    status: NEW
+    source: sensor
+
+  invalid_location:
+    incident_id: inc_999
+    type: temperature
+    location: site_99       # не из sites.csv
+    time: "2025-11-01T08:00:00Z"
+    status: NEW
+
+  invalid_transition:
+    incident_id: inc_001
+    to: CLOSED               # напрямую из NEW нельзя
+    actor: e_101
