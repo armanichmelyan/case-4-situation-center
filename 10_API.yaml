@@ -31,82 +31,158 @@ definitions:
         type: string
         description: HMAC-SHA256 подпись события (защита от подмены)
 
-  # TODO — заполните
+  # Заполнено командой по подсказкам
   IncidentEvent:
     type: object
     required: [incident_id, type, location, time, status]
     properties:
       incident_id:
-        ?   # подсказка: строка, pattern ^inc_[0-9]{3}$
+        # подсказка: строка, pattern ^inc_[0-9]{3}$
+        type: string
+        pattern: '^inc_[0-9]{3}$'
       type:
-        ?   # подсказка: enum temperature / ventilation / humidity / equipment / other
+        # подсказка: enum temperature / ventilation / humidity / equipment / other
+        enum: [temperature, ventilation, humidity, equipment, other]
       location:
-        ?   # подсказка: строка, pattern ^site_[0-9]{2}$
+        # подсказка: строка, pattern ^site_[0-9]{2}$
+        type: string
+        pattern: '^site_[0-9]{2}$'
       time:
-        ?   # подсказка: string, format date-time
+        # подсказка: string, format date-time
+        type: string
+        format: date-time
       responsible:
-        ?   # подсказка: строка, nullable
+        # подсказка: строка, nullable
+        type: [string, 'null']
+        minLength: 1
       status:
-        ?   # подсказка: enum NEW / ASSIGNED / IN_PROGRESS / CLOSED
+        # подсказка: enum NEW / ASSIGNED / IN_PROGRESS / CLOSED
+        enum: [NEW, ASSIGNED, IN_PROGRESS, CLOSED]
       source:
-        ?   # подсказка: enum mobile / sensor / auto
+        # подсказка: enum mobile / sensor / auto
+        enum: [mobile, sensor, auto]
 
-  # TODO — заполните
+      deadline:
+        type: string
+        format: date-time
+        description: Срок закрытия; вычисляется обработчиком перед сохранением, если не передан
+      severity:
+        enum: [WARNING, CRITICAL, STALE]
+        description: Уровень для SLA; неизвестный уровень старых данных не выдумывается
+    allOf:
+      - if:
+          properties:
+            status:
+              enum: [ASSIGNED, IN_PROGRESS, CLOSED]
+          required: [status]
+        then:
+          required: [responsible]
+          properties:
+            responsible:
+              type: string
+              minLength: 1
+
+  # Заполнено командой по подсказкам
   AlertEvent:
     type: object
-    required: [alert_id, severity, at]
+    # В 08_ER.md все пять полей Alert обязательны.
+    required: [alert_id, measurement_id, severity, action, at]
     properties:
       alert_id:
-        ?   # подсказка: строка, pattern ^alrt_[0-9]{4}$
+        # подсказка: строка, pattern ^alrt_[0-9]{4}$
+        type: string
+        pattern: '^alrt_[0-9]{4}$'
       measurement_id:
-        ?   # подсказка: FK на Measurement
+        # подсказка: FK на Measurement
+        type: string
+        minLength: 1
+        description: Ссылка на существующее Measurement.measurement_id
       severity:
-        ?   # подсказка: enum WARNING / CRITICAL / STALE
+        # подсказка: enum WARNING / CRITICAL / STALE
+        enum: [WARNING, CRITICAL, STALE]
       action:
-        ?   # подсказка: enum ALERT_CREATED / ESCALATED / DUPLICATE
+        # подсказка: enum ALERT_CREATED / ESCALATED / DUPLICATE
+        enum: [ALERT_CREATED, ESCALATED, DUPLICATE]
       at:
-        ?   # подсказка: string, format date-time
+        # подсказка: string, format date-time
+        type: string
+        format: date-time
 
-  # TODO — заполните
+  # Заполнено командой по подсказкам
   TransitionRequest:
     type: object
     required: [incident_id, to, actor]
     properties:
       incident_id:
-        ?   # подсказка: строка
+        # подсказка: строка
+        type: string
+        pattern: '^inc_[0-9]{3}$'
       to:
-        ?   # подсказка: enum ASSIGNED / IN_PROGRESS / CLOSED
+        # подсказка: enum ASSIGNED / IN_PROGRESS / CLOSED
+        enum: [ASSIGNED, IN_PROGRESS, CLOSED]
       actor:
-        ?   # подсказка: строка (роль или user_id)
+        # подсказка: строка (роль или user_id)
+        type: string
+        minLength: 1
+        description: Идентификатор пользователя; сверяется с личностью по токену
       comment:
-        ?   # подсказка: строка, nullable
+        # подсказка: строка, nullable
+        type: [string, 'null']
 
-  # TODO — заполните
+      responsible:
+        type: string
+        minLength: 1
+        description: Идентификатор назначаемого инженера
+      resolution_reason:
+        type: string
+        minLength: 1
+        description: Для закрытия из ASSIGNED обязательно значение NO_ACTION
+    allOf:
+      - if:
+          properties:
+            to:
+              const: ASSIGNED
+          required: [to]
+        then:
+          required: [responsible]
+
+  # Заполнено командой по подсказкам
   Error:
     type: object
     required: [error_code, message]
     properties:
       error_code:
-        ?   # подсказка: enum VALIDATION_ERROR / UNKNOWN_LOCATION / INVALID_TRANSITION / DUPLICATE_EVENT / SENSOR_SIGNATURE_INVALID
+        # подсказка: enum VALIDATION_ERROR / UNKNOWN_LOCATION / INVALID_TRANSITION / DUPLICATE_EVENT / SENSOR_SIGNATURE_INVALID
+        enum: [VALIDATION_ERROR, UNKNOWN_LOCATION, INVALID_TRANSITION, DUPLICATE_EVENT, SENSOR_SIGNATURE_INVALID, UNAUTHORIZED, FORBIDDEN, INVALID_RESPONSIBLE, NO_ACTION_REQUIRED, INVALID_SITE_ID, INVALID_NAME]
       message:
-        ?   # подсказка: строка
+        # подсказка: строка
+        type: string
+        minLength: 1
       retryable:
-        ?   # подсказка: boolean
+        # подсказка: boolean
+        type: boolean
       details:
-        ?   # подсказка: object
+        # подсказка: object
+        type: object
+        properties:
+          field:
+            type: string
+          code:
+            type: string
 
+# JSON Schema требует examples как массив; имена примеров сохранены комментариями.
 examples:
 
-  valid_telemetry:
-    event_id: evt_ab12cd
+  # valid_telemetry
+  - event_id: evt_ab12cd
     time: "2025-11-01T08:00:00Z"
     location: site_01
     indicator: temperature
     value: 28.3
     signature: "hmac:..."
 
-  valid_incident:
-    incident_id: inc_001
+  # valid_incident
+  - incident_id: inc_001
     type: temperature
     location: site_01
     time: "2025-11-01T08:00:00Z"
@@ -114,14 +190,70 @@ examples:
     status: NEW
     source: sensor
 
-  invalid_location:
-    incident_id: inc_999
+  # invalid_location
+  - incident_id: inc_999
     type: temperature
     location: site_99       # не из sites.csv
     time: "2025-11-01T08:00:00Z"
     status: NEW
 
-  invalid_transition:
-    incident_id: inc_001
+  # invalid_transition
+  - incident_id: inc_001
     to: CLOSED               # напрямую из NEW нельзя
     actor: e_101
+
+  # valid_assignment
+  - incident_id: inc_001
+    to: ASSIGNED
+    actor: dispatcher_1
+    responsible: e_101
+
+  # valid_no_action
+  - incident_id: inc_001
+    to: CLOSED
+    actor: manager_1
+    resolution_reason: NO_ACTION
+
+  # valid_alert
+  - alert_id: alrt_0001
+    measurement_id: msr_000001
+    severity: WARNING
+    action: ALERT_CREATED
+    at: "2025-11-01T08:00:00Z"
+
+  # unknown_location_error
+  - error_code: VALIDATION_ERROR
+    message: "Участок отсутствует в справочнике"
+    retryable: false
+    details:
+      field: location
+      code: UNKNOWN_LOCATION
+
+# Правила применения схем (пояснения команды).
+# Это проектируемый контракт, а не утверждение о готовом сетевом API.
+# Для проверки выбирают определение через $ref: "#/definitions/IncidentEvent",
+# оставляя definitions в том же документе. Корень без $ref событие не проверяет.
+# TelemetryEvent сохранен как образец. Хотя signature не включена в required,
+# приемник обязан отклонить неподписанное событие по 11_ИБ.md.
+# value в JSON — число. Пустая строка CSV — условность эмулятора, не валидное
+# TelemetryEvent. Нет сообщений более 5 минут — внутренний таймер STALE.
+# Нормы берутся из каталога, norm_min/norm_max не входят в TelemetryEvent.
+# site_99 проходит pattern; наличие участка проверяется отдельно по sites.csv.
+# Историю статусов, роль, зону и личность actor проверяет сервис, не JSON Schema.
+# actor сверяется с аутентифицированным пользователем, source — с доверенным
+# обработчиком. Передача полей actor/source сама по себе не дает полномочий.
+# IncidentEvent — сообщение/запись, не точная сигнатура Python create_incident.
+# source/deadline могут отсутствовать в сообщении; перед сохранением по 08_ER.md
+# их определяет обработчик. У старых CSV неизвестный source не выдумывается.
+# CLOSED допустим в TransitionRequest, но NEW -> CLOSED запрещен жизненным циклом.
+# ASSIGNED -> CLOSED требует resolution_reason=NO_ACTION. Это проверка сервиса.
+# invalid_transition ниже examples структурно допустим, но запрещен правилами.
+# DUPLICATE — результат повтора, второй Alert не сохраняется. Прототип возвращает
+# этот результат отдельно от записи Alert; enum сохранен по подсказке шаблона.
+# T4-3: error_code=VALIDATION_ERROR, details.field=location,
+# details.code=UNKNOWN_LOCATION. Отдельный UNKNOWN_LOCATION оставлен по подсказке.
+# Число 422 в консоли не означает наличия HTTP-сервера. Перечень кодов дополнен
+# кодами текущего прототипа. Обновления кода второй участник согласует с командой.
+# Schema не проверяет HMAC, существование внешних FK и права пользователя.
+# signature="hmac:..." в исходном примере — заглушка: структура допустима,
+# но настоящий приемник примет событие только с корректно вычисленной подписью.
